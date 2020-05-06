@@ -1,3 +1,8 @@
+.array-container {
+  flex-direction: 'row';
+  display: flex;
+}
+
 .array-bar {
   background-color: #F2A96C;
   width: 50px;
