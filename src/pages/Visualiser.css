@@ -4,6 +4,8 @@
 }
 
 .visualiser-container {
+  margin-top: 50px;
+  min-height: 600px;
   flex-direction: 'row';
   display: flex;
   overflow: hidden;
@@ -26,7 +28,8 @@
   border-radius: 5px;
   display: flex;
 }
-.controls-container button {
-  margin-left: 5px;
-  margin-right: 5px;
+.controls-container .btn {
+  min-width: 30px;
+  margin-left: 10px;
+  margin-right: 10px;  
 }
