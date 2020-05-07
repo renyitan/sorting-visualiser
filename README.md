@@ -1,7 +1,7 @@
 ## Sorting Visualiser
 Written in Javascript on React
 
-<img width="800" src="./"/>
+<img width="600" src="app-image.png"/>
 
 
 ## References
