@@ -1,21 +1,21 @@
 // Reference: https://www.youtube.com/watch?v=COk73cpQbFQ&t=1000s
-export function getQuickSortProcedures(array) {
+export function getQuickSortRightPivotProcedures(array) {
   if (array.length <= 1) return array;
   const procedures = [];
   const auxArray = array.slice();
-  performQuickSort(procedures, auxArray, 0, auxArray.length - 1);
+  performQuickSortWithRightPivot(procedures, auxArray, 0, auxArray.length - 1);
   return procedures;
 }
 
-export function performQuickSort(procedures, auxArray, start, end) {
+export function performQuickSortWithRightPivot(procedures, auxArray, start, end) {
   if (start < end) {
-    let pIndex = partition(procedures, auxArray, start, end);
-    performQuickSort(procedures, auxArray, start, pIndex - 1);
-    performQuickSort(procedures, auxArray, pIndex + 1, end);
+    let pIndex = partitionWithRightPivot(procedures, auxArray, start, end);
+    performQuickSortWithRightPivot(procedures, auxArray, start, pIndex - 1);
+    performQuickSortWithRightPivot(procedures, auxArray, pIndex + 1, end);
   }
 }
 
-export function partition(procedures, auxArray, start, end) {
+export function partitionWithRightPivot(procedures, auxArray, start, end) {
   // use right most element as pivot
   let pivot = auxArray[end]
   let pIndex = start;
