@@ -1,78 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { generateRandomNumber } from '../utils/generators';
+
+import { getBubbleSortProcedures } from '../algorithms/BubbleSort';
+
 import './Visualiser.css';
+import { Colors } from '../styles';
 
-const barArray = [];
-
-for (let i = 0; i < 100; i++) {
-  const num = generateRandomNumber(1, 500);
-  barArray.push(num);
-}
-
-function yielder() {
-  setTimeout(() => {
-    return Math.floor(Math.random() * 100) + 1;
-  }, 1000);
-}
-
-let num = 0;
+const ANIMATION_SPEED = 0.1;
+const TOTAL_NUM_ARRAYS = 300;
 
 const Visualiser = () => {
-  const [start, updateStart] = useState(false);
+  const [visualArray, updateArray] = useState([]);
 
-  let [animationArr] = useState([]);
+  // when the component first mounts, create a new random array
+  useEffect(() => resetArray(), []);
 
-  while (start) {
-    console.log('hi');
-    setTimeout(() => {
-      num++;
-    }, 1000);
+  function resetArray() {
+    const array = [];
+    for (let i = 0; i < TOTAL_NUM_ARRAYS; i++) {
+      const num = generateRandomNumber(3, 1000);
+      array.push(num);
+      updateArray(array);
+    }
+    // set the colors to default color
+    const arrayBars = document.getElementsByClassName('array-bar');
+    for (let j = 0; j < arrayBars.length; j++) {
+      arrayBars[j].style.backgroundColor = Colors.BAR_DEFAULT;
+    }
+  }
 
-    if (num >= 10) {
-      break;
+  function bubbleSort() {
+    const procedures = getBubbleSortProcedures(visualArray);
+    const arrayBars = document.getElementsByClassName('array-bar');
+
+    for (let i = 0; i < procedures.length; i++) {
+      setTimeout(() => {
+        let [oldPosition, newPosition] = procedures[i];
+
+        let oldBarStyle = arrayBars[oldPosition].style;
+        let newBarStyle = arrayBars[newPosition].style;
+
+        // here we make the swap visually
+        let temp = visualArray[oldPosition];
+        visualArray[oldPosition] = visualArray[newPosition];
+        visualArray[newPosition] = temp;
+        oldBarStyle.height = `${visualArray[oldPosition]}px`;
+        newBarStyle.height = `${visualArray[newPosition]}px`;
+
+        let currentPosition = oldPosition;
+        for (let j = 0; j < currentPosition; j++) {
+          arrayBars[j].style.backgroundColor = Colors.BAR_PROCESSING;
+        }
+
+        if (i === procedures.length - 1) {
+          makeAllBarsGreen();
+        }
+      }, ANIMATION_SPEED);
+    }
+  }
+
+  function makeAllBarsGreen() {
+    const arrayBars = document.getElementsByClassName('array-bar');
+    for (let j = 0; j < arrayBars.length; j++) {
+      arrayBars[j].style.backgroundColor = Colors.BAR_COMPLETED;
     }
   }
 
   return (
-    <div>
-      Hello
-      <div className="array-container">
-        {animationArr.map((i, idx) => (
-          <div className="array-bar" key={idx} style={{ height: i }} />
+    <div className="visualiser-layout">
+      Sorting Visualiser
+      <div className="visualiser-container">
+        {visualArray.map((i, idx) => (
+          <div
+            className="array-bar"
+            key={idx}
+            style={{ height: i, backgroundColor: Colors.BAR_DEFAULT }}
+          />
         ))}
       </div>
-      <div>
-        <button onClick={() => updateStart(true)}>Add</button>
+      <div className="controls-container">
+        <button onClick={() => bubbleSort()}>Bubble Sort</button>
+        <button onClick={() => resetArray()}>Reset Arrays</button>
       </div>
     </div>
   );
 };
-
-function generateRandomNumber(start, end) {
-  return Math.floor(Math.random() * end) + start;
-}
-
-function bubbleSort(arr) {
-  let sorted = arr;
-  for (let i = 0; i < sorted.length; i++) {
-    for (let j = i; j < sorted.length; j++) {
-      if (sorted[i] > sorted[j]) {
-        const temp = sorted[i];
-        sorted[i] = arr[j];
-        sorted[j] = temp;
-      }
-    }
-  }
-  return sorted;
-}
-
-function isSorted(array) {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i + 1] < array[i]) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-}
 
 export default Visualiser;

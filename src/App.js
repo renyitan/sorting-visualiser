@@ -6,9 +6,7 @@ function App() {
   return (
     <div className="App">
       <Visualiser />
-      <div>
-        Menu Bar
-      </div>
+
     </div>
   );
 }

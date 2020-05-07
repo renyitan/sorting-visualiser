@@ -1,10 +1,32 @@
-.array-container {
+.visualiser-layout {
+  max-width: 80%;
+  margin: auto;
+}
+
+.visualiser-container {
   flex-direction: 'row';
   display: flex;
+  overflow: hidden;
+  align-items: flex-end;
+  border-radius: 6px;
 }
 
 .array-bar {
-  background-color: #F2A96C;
   width: 50px;
-  height: 50px;
+  /* height: 50px; */
+  bottom: 0px;
+}
+
+.controls-container {
+  margin-top: 30px;
+  background-color: #48494b;
+  min-height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  display: flex;
+}
+.controls-container button {
+  margin-left: 5px;
+  margin-right: 5px;
 }
