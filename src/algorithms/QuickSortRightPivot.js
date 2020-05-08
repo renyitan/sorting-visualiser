@@ -1,3 +1,4 @@
+import { PROCEDURE_TYPE } from '../utils/procedureTypes';
 export function getQuickSortRightPivotProcedures(array) {
   if (array.length <= 1) return array;
   const procedures = [];
@@ -17,18 +18,18 @@ function performQuickSortWithRightPivot(procedures, auxArray, start, end) {
 
 function partitionWithRightPivot(procedures, auxArray, start, end) {
   let pivot = auxArray[end] // use right most element as pivot
-  procedures.push({ type: 'pivot', between: [end, end] });
+  procedures.push({ type: PROCEDURE_TYPE.PIVOT, between: [end, end] });
   let pIndex = start;
   for (let i = start; i < end; i++) {
-    procedures.push({ type: 'compare', between: [i, end] });
+    procedures.push({ type: PROCEDURE_TYPE.COMPARE, between: [i, end] });
     if (auxArray[i] < pivot) {
       swap(auxArray, i, pIndex)
-      procedures.push({ type: 'swap', between: [i, pIndex] });
+      procedures.push({ type: PROCEDURE_TYPE.SWAP, between: [i, pIndex] });
       pIndex++;
     }
   }
   swap(auxArray, end, pIndex) // swap pivot (arr[end]) with arr[pIndex]
-  procedures.push({ type: 'swap', between: [end, pIndex] });
+  procedures.push({ type: PROCEDURE_TYPE.SWAP, between: [end, pIndex] });
   return pIndex;
 }
 

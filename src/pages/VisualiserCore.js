@@ -1,4 +1,8 @@
+/**
+ * Core engine for the animation. 
+ */
 import { Colors } from '../styles';
+import { PROCEDURE_TYPE } from '../utils/procedureTypes';
 
 export function swapBars(a, b) {
   const arrayBars = document.getElementsByClassName('array-bar');
@@ -36,17 +40,21 @@ export async function ExecuteProcedure(procedure, executionSpeed) {
   return new Promise((resolve) => {
     const arrayBars = document.getElementsByClassName('array-bar');
     const [a, b] = procedure.between;
-    if (procedure.type === 'pivot') {
-      arrayBars[a].style.backgroundColor = Colors.PIVOT;
-    }
-    if (procedure.type === 'compare') {
-      arrayBars[a].style.backgroundColor = Colors.COMPARE;
-      arrayBars[b].style.backgroundColor = Colors.COMPARE;
-    }
-    if (procedure.type === 'swap') {
-      arrayBars[a].style.backgroundColor = Colors.SWAP;
-      arrayBars[b].style.backgroundColor = Colors.SWAP;
-      swapBars(a, b);
+    switch (procedure.type) {
+      case PROCEDURE_TYPE.PIVOT:
+        arrayBars[a].style.backgroundColor = Colors.PIVOT;
+        break;
+      case PROCEDURE_TYPE.COMPARE:
+        arrayBars[a].style.backgroundColor = Colors.COMPARE;
+        arrayBars[b].style.backgroundColor = Colors.COMPARE;
+        break;
+      case PROCEDURE_TYPE.SWAP:
+        arrayBars[a].style.backgroundColor = Colors.SWAP;
+        arrayBars[b].style.backgroundColor = Colors.SWAP;
+        swapBars(a, b);
+        break;
+      default:
+        break;
     }
     return setTimeout(resolve, executionSpeed);
   });

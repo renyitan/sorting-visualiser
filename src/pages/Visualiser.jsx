@@ -11,7 +11,7 @@ import { ProceduresReader } from './VisualiserCore';
 
 const ANIMATION_SPEED = 1;
 const MIN_NUM_ARRAYS = 50;
-const MAX_NUM_ARRAYS = 2000;
+const MAX_NUM_ARRAYS = 800;
 
 const Visualiser = () => {
   const [visualArray, updateArray] = useState(() => []);
