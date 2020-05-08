@@ -20,12 +20,12 @@ export function performQuickSortWithMidPivot(procedures, auxArray, start, end) {
 
   while (left <= right) {
     while (auxArray[left] < pivot) {
-      // procedures.push({ type: 'compare', between: [left, mid] });
+      // procedures.push({ type: PROCEDURE_TYPE.COMPARE, between: [left, mid] });
       left++;
     }
 
     while (auxArray[right] > pivot) {
-      // procedures.push({ type: 'compare', between: [right, mid] });
+      // procedures.push({ type: PROCEDURE_TYPE.COMPARE, between: [right, mid] });
       right--;
     }
 

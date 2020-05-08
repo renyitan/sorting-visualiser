@@ -53,6 +53,8 @@ const Visualiser = () => {
 
   return (
     <div className="visualiser-layout">
+      <h1>Sorting Visualiser</h1>
+      <p>By Renyi Tan</p>
       <div className="visualiser-container">
         {visualArray.map((i, idx) => (
           <div

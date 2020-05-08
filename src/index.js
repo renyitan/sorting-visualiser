@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Visualiser from './app/Visualiser';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Visualiser />
   </React.StrictMode>,
   document.getElementById('root')
 );

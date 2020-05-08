@@ -1,6 +1,7 @@
 .visualiser-layout {
   max-width: 80%;
   margin: auto;
+  text-align: center;
 }
 
 .visualiser-container {
