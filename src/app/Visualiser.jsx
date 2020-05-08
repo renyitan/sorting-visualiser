@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+import { ProceduresReader } from './VisualiserCore';
 import { generateRandomNumber } from '../utils/generators';
 import { getQuickSortRightPivotProcedures } from '../algorithms/QuickSortRightPivot';
 import { getQuickSortMidPivotProcedures } from '../algorithms/QuickSortMidPivot';
@@ -6,8 +8,6 @@ import { getBubbleSortProcedures } from '../algorithms/BubbleSort';
 
 import './Visualiser.css';
 import { Colors } from '../styles';
-
-import { ProceduresReader } from './VisualiserCore';
 
 const ANIMATION_SPEED = 1;
 const MIN_NUM_ARRAYS = 50;
@@ -18,6 +18,7 @@ const Visualiser = () => {
   const [sliderValue, updateSliderValue] = useState(
     (MAX_NUM_ARRAYS + MIN_NUM_ARRAYS) / 2
   );
+  const [isRunning, updateIsRunning] = useState(false);
 
   function resetArray() {
     const array = [];
@@ -36,19 +37,22 @@ const Visualiser = () => {
   // when the component first mounts, create a new random array
   useEffect(() => resetArray(), []);
 
-  function quickSortWithRightPivot() {
+  async function quickSortWithRightPivot() {
     const procedures = getQuickSortRightPivotProcedures(visualArray);
-    ProceduresReader(procedures, ANIMATION_SPEED);
+    await ProceduresReader(procedures, ANIMATION_SPEED);
+    updateIsRunning(false);
   }
 
-  function quickSortWithMidPivot() {
+  async function quickSortWithMidPivot() {
     const procedures = getQuickSortMidPivotProcedures(visualArray);
-    ProceduresReader(procedures, ANIMATION_SPEED);
+    await ProceduresReader(procedures, ANIMATION_SPEED);
+    updateIsRunning(false);
   }
 
-  function bubbleSort() {
+  async function bubbleSort() {
     const procedures = getBubbleSortProcedures(visualArray);
-    ProceduresReader(procedures, ANIMATION_SPEED);
+    await ProceduresReader(procedures, ANIMATION_SPEED);
+    updateIsRunning(false);
   }
 
   return (
@@ -75,6 +79,7 @@ const Visualiser = () => {
               updateSliderValue(event.target.value);
               resetArray();
             }}
+            disabled={isRunning}
           />
           <span
             style={{
@@ -87,16 +92,43 @@ const Visualiser = () => {
             {sliderValue}
           </span>
         </div>
-        <button className="btn" onClick={() => bubbleSort()}>
+        <button
+          className="btn"
+          onClick={() => {
+            bubbleSort();
+            updateIsRunning(true);
+          }}
+          disabled={isRunning}
+        >
           Bubble Sort
         </button>
-        <button className="btn" onClick={() => quickSortWithRightPivot()}>
+        <button
+          className="btn"
+          onClick={() => {
+            quickSortWithRightPivot();
+            updateIsRunning(true);
+          }}
+          disabled={isRunning}
+        >
           Quick Sort (Lomuto)
         </button>
-        <button className="btn" onClick={() => quickSortWithMidPivot()}>
+        <button
+          className="btn"
+          onClick={() => {
+            quickSortWithMidPivot();
+            updateIsRunning(true);
+          }}
+          disabled={isRunning}
+        >
           Quick Sort (Hoare)
         </button>
-        <button className="btn" onClick={() => resetArray()}>
+        <button
+          className="btn"
+          onClick={() => {
+            resetArray();
+          }}
+          disabled={isRunning}
+        >
           Reset Arrays
         </button>
       </div>
