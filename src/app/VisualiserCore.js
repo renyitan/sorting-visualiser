@@ -24,7 +24,7 @@ export async function ProceduresReader(procedures, executionSpeed) {
   for (let i = 0; i < procedures.length; i++) {
     const [a, b] = procedures[i].between;
 
-    await ExecuteProcedure(procedures[i]);
+    await ExecuteProcedure(procedures[i], executionSpeed);
 
     // revert bars back to default color
     arrayBars[a].style.backgroundColor = Colors.BAR_DEFAULT;

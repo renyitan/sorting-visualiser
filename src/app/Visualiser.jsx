@@ -10,7 +10,7 @@ import { getMergeSortProcedures } from '../algorithms/MergeSort';
 import './Visualiser.css';
 import { Colors } from '../styles';
 
-const ANIMATION_SPEED = 1;
+const ANIMATION_SPEED = 0.1;
 const MIN_NUM_ARRAYS = 50;
 const MAX_NUM_ARRAYS = 800;
 
