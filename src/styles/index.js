@@ -1,9 +1,9 @@
 export const Colors = {
   // BAR_DEFAULT: '#F2A96C', // keeping it here because i like this color
 
-  // https://www.schemecolor.com/bold-violet-and-turquoise.php
-  BAR_DEFAULT: '#1fdbdf',
-  BAR_CURRENT: '#350268',
-  BAR_COMPLETED: '#00ffef',
-  BAR_PROCESSING: '#00aacb'
+  BAR_DEFAULT: '#787A7C',  // dark grey
+  BAR_COMPLETED: '#00C5B7', // turqiose
+  COMPARE: '#63F700', // bright green
+  SWAP: '#F79C43', // bright orange
+  PIVOT: 'red' // red
 }

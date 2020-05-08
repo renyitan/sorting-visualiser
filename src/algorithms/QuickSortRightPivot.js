@@ -3,7 +3,10 @@ export function getQuickSortRightPivotProcedures(array) {
   if (array.length <= 1) return array;
   const procedures = [];
   const auxArray = array.slice();
+  // const auxArray = [4, 3, 9, 7, 8]
+  // const auxArray = array;
   performQuickSortWithRightPivot(procedures, auxArray, 0, auxArray.length - 1);
+
   return procedures;
 }
 
@@ -18,23 +21,27 @@ export function performQuickSortWithRightPivot(procedures, auxArray, start, end)
 export function partitionWithRightPivot(procedures, auxArray, start, end) {
   // use right most element as pivot
   let pivot = auxArray[end]
+  procedures.push({ type: 'pivot', between: [end, end] });
   let pIndex = start;
   for (let i = start; i < end; i++) {
+    procedures.push({ type: 'compare', between: [i, end] });
     if (auxArray[i] < pivot) {
       // swap A[i] and A[pIndex]
-      let temp = auxArray[i];
-      auxArray[i] = auxArray[pIndex];
-      auxArray[pIndex] = temp;
+      swap(auxArray, i, pIndex)
+      procedures.push({ type: 'swap', between: [i, pIndex] });
       // add affected indices into procedures array
-      procedures.push([i, pIndex]);
       pIndex++;
     }
   }
   // swap pivot (arr[end]) with arr[pIndex]
-  let temp = auxArray[end];
-  auxArray[end] = auxArray[pIndex]
-  auxArray[pIndex] = temp;
-  procedures.push([pIndex, end]);
-
+  swap(auxArray, end, pIndex)
+  procedures.push({ type: 'swap', between: [end, pIndex] });
   return pIndex;
+}
+
+
+function swap(arr, firstIndex, secondIndex) {
+  const temp = arr[firstIndex];
+  arr[firstIndex] = arr[secondIndex];
+  arr[secondIndex] = temp;
 }

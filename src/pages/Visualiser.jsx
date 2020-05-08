@@ -7,24 +7,20 @@ import {
   partitionWithRightPivot,
   performQuickSortWithRightPivot,
 } from '../algorithms/QuickSortRightPivot';
-import {
-  getQuickSortMidPivotProcedures,
-  partitionWithMidPivot,
-  performQuickSortWithMidPivot,
-} from '../algorithms/QuickSortMidPivot';
 
 import './Visualiser.css';
 import { Colors } from '../styles';
 
-const ANIMATION_SPEED = 0.1;
-const MIN_NUM_ARRAYS = 100;
-const MAX_NUM_ARRAYS = 2000;
+const ANIMATION_SPEED = 1;
+const MIN_NUM_ARRAYS = 200;
+const MAX_NUM_ARRAYS = 500;
 
 const Visualiser = () => {
-  const [visualArray, updateArray] = useState([]);
+  const [visualArray, updateArray] = useState(() => []);
   const [sliderValue, updateSliderValue] = useState(
     (MAX_NUM_ARRAYS + MIN_NUM_ARRAYS) / 2
   );
+
   function resetArray() {
     const array = [];
     for (let i = 0; i < sliderValue; i++) {
@@ -42,128 +38,21 @@ const Visualiser = () => {
   // when the component first mounts, create a new random array
   useEffect(() => resetArray(), []);
 
-  function bubbleSort() {
-    const procedures = getBubbleSortProcedures(visualArray);
-    const arrayBars = document.getElementsByClassName('array-bar');
-    for (let i = 0; i < procedures.length; i++) {
-      setTimeout(() => {
-        let [oldPosition, newPosition] = procedures[i];
-        let oldBarStyle = arrayBars[oldPosition].style;
-        let newBarStyle = arrayBars[newPosition].style;
-        // here we make the swap visually
-        let temp = visualArray[oldPosition];
-        visualArray[oldPosition] = visualArray[newPosition];
-        visualArray[newPosition] = temp;
-        oldBarStyle.height = `${visualArray[oldPosition]}px`;
-        newBarStyle.height = `${visualArray[newPosition]}px`;
-        let currentPosition = oldPosition;
-        for (let j = 0; j < currentPosition; j++) {
-          arrayBars[j].style.backgroundColor = Colors.BAR_PROCESSING;
-        }
-        if (i === procedures.length - 1) {
-          markComplete();
-        }
-      }, ANIMATION_SPEED);
-    }
-  }
-
   async function quickSortWithRightPivot() {
     const procedures = getQuickSortRightPivotProcedures(visualArray);
     const arrayBars = document.getElementsByClassName('array-bar');
 
     for (let i = 0; i < procedures.length; i++) {
-      setTimeout(() => {
-        let [oldPosition, newPosition] = procedures[i];
-        let oldBarStyle = arrayBars[oldPosition].style;
-        let newBarStyle = arrayBars[newPosition].style;
-        let pIndex;
-        const dummyProcedures = [];
-        if (visualArray.length > 1) {
-          pIndex = partitionWithRightPivot(
-            dummyProcedures,
-            visualArray,
-            0,
-            visualArray.length - 1
-          );
-          performQuickSortWithRightPivot(
-            dummyProcedures,
-            visualArray,
-            0,
-            pIndex - 1
-          );
-          performQuickSortWithRightPivot(
-            dummyProcedures,
-            visualArray,
-            pIndex + 1,
-            visualArray.length - 1
-          );
-        }
-        oldBarStyle.height = `${visualArray[oldPosition]}px`;
-        newBarStyle.height = `${visualArray[newPosition]}px`;
-        oldBarStyle.backgroundColor = Colors.BAR_CURRENT;
-        newBarStyle.backgroundColor = Colors.BAR_CURRENT;
-        let currentPosition = oldPosition;
-        for (let j = 0; j < currentPosition; j++) {
-          var jBarStyle = arrayBars[j].style;
-          jBarStyle.backgroundColor = Colors.BAR_PROCESSING;
-        }
-        if (i === procedures.length - 1) {
-          markComplete();
-        }
-      }, ANIMATION_SPEED);
-    }
-  }
+      const [a, b] = procedures[i].between;
 
-  async function quickSortWithMidPivot() {
-    const procedures = getQuickSortMidPivotProcedures(visualArray);
-    const arrayBars = document.getElementsByClassName('array-bar');
+      await doer(procedures[i]);
 
-    for (let i = 0; i < procedures.length; i++) {
-      setTimeout(() => {
-        let [oldPosition, newPosition] = procedures[i];
-        let oldBarStyle = arrayBars[oldPosition].style;
-        let newBarStyle = arrayBars[newPosition].style;
-        let pIndex;
-        const dummyProcedures = [];
-        if (visualArray.length > 1) {
-          pIndex = partitionWithMidPivot(
-            dummyProcedures,
-            visualArray,
-            0,
-            visualArray.length - 1
-          );
+      arrayBars[a].style.backgroundColor = Colors.BAR_DEFAULT;
+      arrayBars[b].style.backgroundColor = Colors.BAR_DEFAULT;
 
-          if (0 < pIndex - 1) {
-            performQuickSortWithMidPivot(
-              dummyProcedures,
-              visualArray,
-              0,
-              pIndex - 1
-            );
-          }
-          if (pIndex < visualArray.length) {
-            performQuickSortWithMidPivot(
-              dummyProcedures,
-              visualArray,
-              pIndex + 1,
-              visualArray.length - 1
-            );
-          }
-        }
-        oldBarStyle.height = `${visualArray[oldPosition]}px`;
-        newBarStyle.height = `${visualArray[newPosition]}px`;
-        oldBarStyle.backgroundColor = Colors.BAR_PROCESSING;
-        newBarStyle.backgroundColor = Colors.BAR_CURRENT;
-        let currentPosition = oldPosition;
-        for (let j = 0; j < currentPosition; j++) {
-          var jBarStyle = arrayBars[j].style;
-          // jBarStyle.backgroundColor = Colors.BAR_PROCESSING;
-          jBarStyle.backgroundColor = Colors.BAR_PROCESSING;
-        }
-        if (i === procedures.length - 1) {
-          markComplete();
-        }
-      }, ANIMATION_SPEED);
+      if (i === procedures.length - 1) {
+        markComplete();
+      }
     }
   }
 
@@ -172,6 +61,36 @@ const Visualiser = () => {
     for (let i = 0; i < arrayBars.length; i++) {
       arrayBars[i].style.backgroundColor = Colors.BAR_COMPLETED;
     }
+  }
+
+  async function doer(procedure) {
+    return new Promise((resolve) => {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const [a, b] = procedure.between;
+      // setTimeout(() => {
+      if (procedure.type === 'pivot') {
+        arrayBars[a].style.backgroundColor = Colors.PIVOT;
+      }
+      if (procedure.type === 'compare') {
+        arrayBars[a].style.backgroundColor = Colors.COMPARE;
+        arrayBars[b].style.backgroundColor = Colors.COMPARE;
+      }
+      if (procedure.type === 'swap') {
+        arrayBars[a].style.backgroundColor = Colors.SWAP;
+        arrayBars[b].style.backgroundColor = Colors.SWAP;
+        swapBars(visualArray, a, b);
+      }
+      // });
+      return setTimeout(resolve, ANIMATION_SPEED);
+    });
+  }
+
+  function swapBars(actualArr, a, b) {
+    const arrayBars = document.getElementsByClassName('array-bar');
+    // visual
+    const temp = arrayBars[a].style.height;
+    arrayBars[a].style.height = arrayBars[b].style.height;
+    arrayBars[b].style.height = temp;
   }
 
   return (
@@ -208,18 +127,18 @@ const Visualiser = () => {
             {sliderValue}
           </span>
         </div>
-        <button className="btn" onClick={() => bubbleSort()}>
+        {/* <button className="btn" onClick={() => bubbleSort()}>
           Bubble Sort
-        </button>
+        </button> */}
         <button className="btn" onClick={() => quickSortWithRightPivot()}>
           Quick Sort (Right Pivot)
         </button>
-        <button className="btn" onClick={() => quickSortWithMidPivot()}>
+        {/* <button className="btn" onClick={() => quickSortWithMidPivot()}>
           Quick Sort (Mid Pivot)
         </button>
         <button className="btn" onClick={() => resetArray()}>
           Reset Arrays
-        </button>
+        </button> */}
       </div>
     </div>
   );
