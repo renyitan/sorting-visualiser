@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { generateRandomNumber } from '../utils/generators';
 import { getQuickSortRightPivotProcedures } from '../algorithms/QuickSortRightPivot';
 import { getQuickSortMidPivotProcedures } from '../algorithms/QuickSortMidPivot';
+import { getBubbleSortProcedures } from '../algorithms/BubbleSort';
 
 import './Visualiser.css';
 import { Colors } from '../styles';
 
+import { ProceduresReader } from './VisualiserCore';
+
 const ANIMATION_SPEED = 1;
-const MIN_NUM_ARRAYS = 200;
-const MAX_NUM_ARRAYS = 500;
+const MIN_NUM_ARRAYS = 50;
+const MAX_NUM_ARRAYS = 2000;
 
 const Visualiser = () => {
   const [visualArray, updateArray] = useState(() => []);
@@ -33,79 +36,19 @@ const Visualiser = () => {
   // when the component first mounts, create a new random array
   useEffect(() => resetArray(), []);
 
-  async function quickSortWithRightPivot() {
+  function quickSortWithRightPivot() {
     const procedures = getQuickSortRightPivotProcedures(visualArray);
-    const arrayBars = document.getElementsByClassName('array-bar');
-
-    for (let i = 0; i < procedures.length; i++) {
-      const [a, b] = procedures[i].between;
-
-      await executeProcedure(procedures[i]);
-
-      // revert bars back to default color
-      arrayBars[a].style.backgroundColor = Colors.BAR_DEFAULT;
-      arrayBars[b].style.backgroundColor = Colors.BAR_DEFAULT;
-
-      if (i === procedures.length - 1) {
-        markComplete();
-      }
-    }
+    ProceduresReader(procedures, ANIMATION_SPEED);
   }
 
-  async function quickSortWithMidPivot() {
+  function quickSortWithMidPivot() {
     const procedures = getQuickSortMidPivotProcedures(visualArray);
-    const arrayBars = document.getElementsByClassName('array-bar');
-
-    for (let i = 0; i < procedures.length; i++) {
-      const [a, b] = procedures[i].between;
-
-      await executeProcedure(procedures[i]);
-
-      // revert bars back to default color
-      arrayBars[a].style.backgroundColor = Colors.BAR_DEFAULT;
-      arrayBars[b].style.backgroundColor = Colors.BAR_DEFAULT;
-
-      if (i === procedures.length - 1) {
-        markComplete();
-      }
-    }
+    ProceduresReader(procedures, ANIMATION_SPEED);
   }
 
-  async function executeProcedure(procedure) {
-    return new Promise((resolve) => {
-      const arrayBars = document.getElementsByClassName('array-bar');
-      const [a, b] = procedure.between;
-      // setTimeout(() => {
-      if (procedure.type === 'pivot') {
-        arrayBars[a].style.backgroundColor = Colors.PIVOT;
-      }
-      if (procedure.type === 'compare') {
-        arrayBars[a].style.backgroundColor = Colors.COMPARE;
-        arrayBars[b].style.backgroundColor = Colors.COMPARE;
-      }
-      if (procedure.type === 'swap') {
-        arrayBars[a].style.backgroundColor = Colors.SWAP;
-        arrayBars[b].style.backgroundColor = Colors.SWAP;
-        swapBars(visualArray, a, b);
-      }
-      // });
-      return setTimeout(resolve, ANIMATION_SPEED);
-    });
-  }
-
-  function swapBars(actualArr, a, b) {
-    const arrayBars = document.getElementsByClassName('array-bar');
-    // visual
-    const temp = arrayBars[a].style.height;
-    arrayBars[a].style.height = arrayBars[b].style.height;
-    arrayBars[b].style.height = temp;
-  }
-
-  function markComplete() {
-    const arrayBars = document.getElementsByClassName('array-bar');
-    for (let i = 0; i < arrayBars.length; i++) {
-      arrayBars[i].style.backgroundColor = Colors.BAR_COMPLETED;
-    }
+  function bubbleSort() {
+    const procedures = getBubbleSortProcedures(visualArray);
+    ProceduresReader(procedures, ANIMATION_SPEED);
   }
 
   return (
@@ -142,9 +85,9 @@ const Visualiser = () => {
             {sliderValue}
           </span>
         </div>
-        {/* <button className="btn" onClick={() => bubbleSort()}>
+        <button className="btn" onClick={() => bubbleSort()}>
           Bubble Sort
-        </button> */}
+        </button>
         <button className="btn" onClick={() => quickSortWithRightPivot()}>
           Quick Sort (Lomuto)
         </button>

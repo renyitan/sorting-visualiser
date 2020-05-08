@@ -4,21 +4,18 @@ export function getQuickSortMidPivotProcedures(array) {
   const procedures = [];
   const auxArray = array.slice();
   performQuickSortWithMidPivot(procedures, auxArray, 0, auxArray.length - 1);
-
-  console.log(procedures);
   return procedures;
 }
 
 export function performQuickSortWithMidPivot(procedures, auxArray, start, end) {
-
   if (start >= end) return;
   let mid = Math.floor((start + end) / 2);
-
   let pivot = auxArray[mid];
   let left = start;
   let right = end;
 
   procedures.push({ type: 'pivot', between: [mid, mid] })
+
   while (left <= right) {
     while (auxArray[left] < pivot) {
       // procedures.push({ type: 'compare', between: [left, mid] });
