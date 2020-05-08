@@ -5,6 +5,7 @@ import { generateRandomNumber } from '../utils/generators';
 import { getQuickSortRightPivotProcedures } from '../algorithms/QuickSortRightPivot';
 import { getQuickSortMidPivotProcedures } from '../algorithms/QuickSortMidPivot';
 import { getBubbleSortProcedures } from '../algorithms/BubbleSort';
+import { getMergeSortProcedures } from '../algorithms/MergeSort';
 
 import './Visualiser.css';
 import { Colors } from '../styles';
@@ -45,6 +46,12 @@ const Visualiser = () => {
 
   async function quickSortWithMidPivot() {
     const procedures = getQuickSortMidPivotProcedures(visualArray);
+    await ProceduresReader(procedures, ANIMATION_SPEED);
+    updateIsRunning(false);
+  }
+
+  async function mergeSort() {
+    const procedures = getMergeSortProcedures(visualArray);
     await ProceduresReader(procedures, ANIMATION_SPEED);
     updateIsRunning(false);
   }
@@ -101,6 +108,16 @@ const Visualiser = () => {
           disabled={isRunning}
         >
           Bubble Sort
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            mergeSort();
+            updateIsRunning(true);
+          }}
+          disabled={isRunning}
+        >
+          Merge Sort
         </button>
         <button
           className="btn"
