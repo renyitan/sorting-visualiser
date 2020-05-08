@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { generateRandomNumber } from '../utils/generators';
-
-import { getBubbleSortProcedures } from '../algorithms/BubbleSort';
-import {
-  getQuickSortRightPivotProcedures,
-  partitionWithRightPivot,
-  performQuickSortWithRightPivot,
-} from '../algorithms/QuickSortRightPivot';
+import { getQuickSortRightPivotProcedures } from '../algorithms/QuickSortRightPivot';
+import { getQuickSortMidPivotProcedures } from '../algorithms/QuickSortMidPivot';
 
 import './Visualiser.css';
 import { Colors } from '../styles';
@@ -45,8 +40,9 @@ const Visualiser = () => {
     for (let i = 0; i < procedures.length; i++) {
       const [a, b] = procedures[i].between;
 
-      await doer(procedures[i]);
+      await executeProcedure(procedures[i]);
 
+      // revert bars back to default color
       arrayBars[a].style.backgroundColor = Colors.BAR_DEFAULT;
       arrayBars[b].style.backgroundColor = Colors.BAR_DEFAULT;
 
@@ -56,14 +52,26 @@ const Visualiser = () => {
     }
   }
 
-  function markComplete() {
+  async function quickSortWithMidPivot() {
+    const procedures = getQuickSortMidPivotProcedures(visualArray);
     const arrayBars = document.getElementsByClassName('array-bar');
-    for (let i = 0; i < arrayBars.length; i++) {
-      arrayBars[i].style.backgroundColor = Colors.BAR_COMPLETED;
+
+    for (let i = 0; i < procedures.length; i++) {
+      const [a, b] = procedures[i].between;
+
+      await executeProcedure(procedures[i]);
+
+      // revert bars back to default color
+      arrayBars[a].style.backgroundColor = Colors.BAR_DEFAULT;
+      arrayBars[b].style.backgroundColor = Colors.BAR_DEFAULT;
+
+      if (i === procedures.length - 1) {
+        markComplete();
+      }
     }
   }
 
-  async function doer(procedure) {
+  async function executeProcedure(procedure) {
     return new Promise((resolve) => {
       const arrayBars = document.getElementsByClassName('array-bar');
       const [a, b] = procedure.between;
@@ -91,6 +99,13 @@ const Visualiser = () => {
     const temp = arrayBars[a].style.height;
     arrayBars[a].style.height = arrayBars[b].style.height;
     arrayBars[b].style.height = temp;
+  }
+
+  function markComplete() {
+    const arrayBars = document.getElementsByClassName('array-bar');
+    for (let i = 0; i < arrayBars.length; i++) {
+      arrayBars[i].style.backgroundColor = Colors.BAR_COMPLETED;
+    }
   }
 
   return (
@@ -131,14 +146,14 @@ const Visualiser = () => {
           Bubble Sort
         </button> */}
         <button className="btn" onClick={() => quickSortWithRightPivot()}>
-          Quick Sort (Right Pivot)
+          Quick Sort (Lomuto)
         </button>
-        {/* <button className="btn" onClick={() => quickSortWithMidPivot()}>
-          Quick Sort (Mid Pivot)
+        <button className="btn" onClick={() => quickSortWithMidPivot()}>
+          Quick Sort (Hoare)
         </button>
         <button className="btn" onClick={() => resetArray()}>
           Reset Arrays
-        </button> */}
+        </button>
       </div>
     </div>
   );

@@ -1,49 +1,50 @@
-// Reference: https://www.youtube.com/watch?v=COk73cpQbFQ&t=1000s
+// Reference: https://www.bogotobogo.com/Algorithms/quicksort.php
 export function getQuickSortMidPivotProcedures(array) {
   if (array.length <= 1) return array;
   const procedures = [];
   const auxArray = array.slice();
   performQuickSortWithMidPivot(procedures, auxArray, 0, auxArray.length - 1);
 
+  console.log(procedures);
   return procedures;
 }
 
 export function performQuickSortWithMidPivot(procedures, auxArray, start, end) {
-  let pIndex;
-  if (auxArray.length > 1) {
-    pIndex = partitionWithMidPivot(procedures, auxArray, start, end);
-  }
 
-  if (start < pIndex - 1) {
-    performQuickSortWithMidPivot(procedures, auxArray, start, pIndex - 1);
-  }
+  if (start >= end) return;
+  let mid = Math.floor((start + end) / 2);
 
-  if (pIndex < end) {
-    performQuickSortWithMidPivot(procedures, auxArray, pIndex, end);
-  }
-}
-
-export function partitionWithMidPivot(procedures, auxArray, start, end) {
-  let pivot = auxArray[Math.floor((start + end) / 2)]; //middle element
+  let pivot = auxArray[mid];
+  let left = start;
   let right = end;
-  let left = start; //pIndex
 
+  procedures.push({ type: 'pivot', between: [mid, mid] })
   while (left <= right) {
     while (auxArray[left] < pivot) {
+      // procedures.push({ type: 'compare', between: [left, mid] });
       left++;
     }
+
     while (auxArray[right] > pivot) {
+      // procedures.push({ type: 'compare', between: [right, mid] });
       right--;
     }
+
+    procedures.push({ type: 'compare', between: [left, right] });
     if (left <= right) {
-      let temp = auxArray[left];
-      auxArray[left] = auxArray[right]
-      auxArray[right] = temp;
-      procedures.push([left, right]);
+      swap(auxArray, left, right);
+      procedures.push({ type: 'swap', between: [left, right] });
       left++;
       right--;
     }
   }
 
-  return left;
+  performQuickSortWithMidPivot(procedures, auxArray, start, right);
+  performQuickSortWithMidPivot(procedures, auxArray, left, end);
+}
+
+function swap(arr, firstIndex, secondIndex) {
+  const temp = arr[firstIndex];
+  arr[firstIndex] = arr[secondIndex];
+  arr[secondIndex] = temp;
 }
