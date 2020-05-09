@@ -1,4 +1,4 @@
-## Sorting Visualiser
+# Sorting Visualiser
 Written in Javascript on React CRA
 
 <kbd>
@@ -14,7 +14,7 @@ npm install // get all the dependencies
 npm start
 ```
 
-### Sorting Algorithms
+## Sorting Algorithms
 This are a list of sorting algorithms currently being implemented: 
 
 - Bubble Sort [O(n<sup>2</sup>)]
@@ -24,5 +24,5 @@ This are a list of sorting algorithms currently being implemented:
 - Quicksort (with Lomuto Partition Scheme) [O(n log n)]
 - Quicksort (with Hoare Partition Scheme) [O(n log n)]
 
-### Working Principles
+## Working Principles
 To find out more about the working principles of the implementation, click [here](https://github.com/renyitan/sorting_visualiser/tree/master/src/app). 
