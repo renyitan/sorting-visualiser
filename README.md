@@ -1,7 +1,8 @@
 # Sorting Visualiser
-Written in Javascript on React CRA
+Written in Javascript on React.
 
-Try the demo here [Sorting Visualiser](https://renyitan.github.io/sorting-visualiser/)
+Try the demo: [Sorting Visualiser](https://renyitan.github.io/sorting-visualiser/)
+
 
 <kbd>
 <img width="600" src="visualiser.gif"/>
