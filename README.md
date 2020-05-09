@@ -13,13 +13,15 @@ npm install // get all the dependencies
 npm start
 ```
 
-#### Sorting Algorithms
-- Bubble Sort
-- Insertion Sort
-- Merge Sort
-- Heap Sort
-- Quicksort (with Lomuto Partition Scheme)
-- Quicksort (with Hoare Partition Scheme)
+### Sorting Algorithms
+This are a list of sorting algorithms currently being implemented: 
 
-#### Working Principles
+- Bubble Sort [O(n<sup>2</sup>)]
+- Insertion Sort [O(n<sup>2</sup>)]
+- Merge Sort [O(n log n)]
+- Heap Sort [O(n log n)]
+- Quicksort (with Lomuto Partition Scheme) [O(n log n)]
+- Quicksort (with Hoare Partition Scheme) [O(n log n)]
+
+### Working Principles
 To find out more about the animations implementation, click here. 
