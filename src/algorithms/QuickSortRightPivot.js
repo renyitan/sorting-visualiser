@@ -1,4 +1,10 @@
 import { PROCEDURE_TYPE } from '../utils/procedureTypes';
+
+/**
+ * Quicksort Lomuto Partition Scheme
+ * This scheme chooses a pivot that is typically the last element in the array. 
+ */
+
 export function getQuickSortRightPivotProcedures(array) {
   if (array.length <= 1) return array;
   const procedures = [];

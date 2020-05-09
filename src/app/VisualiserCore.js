@@ -1,12 +1,14 @@
 /**
  * Core engine for the animation. 
+ * Takes in procedures[] and executes each line of procedure with the corresponding 
+ * animations & colour
  */
 import { Colors } from '../styles';
 import { PROCEDURE_TYPE } from '../utils/procedureTypes';
 
 function swapBars(a, b) {
   const arrayBars = document.getElementsByClassName('array-bar');
-  // visual
+  // swap the bars in the document
   const temp = arrayBars[a].style.height;
   arrayBars[a].style.height = arrayBars[b].style.height;
   arrayBars[b].style.height = temp;
@@ -19,11 +21,13 @@ function markComplete() {
   }
 }
 
+/** Main exported function */
 export async function ProceduresReader(procedures, executionSpeed) {
   const arrayBars = document.getElementsByClassName('array-bar');
   for (let i = 0; i < procedures.length; i++) {
     const [a, b] = procedures[i].between;
 
+    // execute the animation for the procedure
     await ExecuteProcedure(procedures[i], executionSpeed);
 
     // revert bars back to default color
@@ -36,7 +40,11 @@ export async function ProceduresReader(procedures, executionSpeed) {
   }
 }
 
-export async function ExecuteProcedure(procedure, executionSpeed) {
+/**
+ * Promise-based with delay so users can see it on screen.
+ * Executes the procedure with the corresponding animation based on type. 
+ */
+async function ExecuteProcedure(procedure, executionSpeed) {
   return new Promise((resolve) => {
     const arrayBars = document.getElementsByClassName('array-bar');
     const [a, b] = procedure.between;

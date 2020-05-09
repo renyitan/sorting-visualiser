@@ -1,3 +1,10 @@
+/**
+ * The Merge Sort implemented here is an in-place Merge Sort. 
+ * This is two facilitate the animation which requires the target array to be sorted in-place
+ * As a result, the performance of this merge sort degrades to O(n^2 log n) since merge is O(n^2) 
+ * and standard merge sort is O(n log n)
+ */
+
 // References: https://github.com/bakeraj4/In-Place-Merge-Sort/blob/master/mergeMain.java
 import { PROCEDURE_TYPE } from '../utils/procedureTypes';
 

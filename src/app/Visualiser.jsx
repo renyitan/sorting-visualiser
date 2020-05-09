@@ -41,6 +41,8 @@ const Visualiser = () => {
   // when the component first mounts, create a new random array
   useEffect(() => resetArray(), []);
 
+
+  /** SORTING FUNCTIONS */
   async function quickSortWithRightPivot() {
     const procedures = getQuickSortRightPivotProcedures(visualArray);
     await ProceduresReader(procedures, ANIMATION_SPEED);

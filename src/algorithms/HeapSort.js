@@ -14,7 +14,7 @@ function performHeapSort(procedures, auxArray) {
 
   let size = auxArray.length;
 
-  // Build heap (rearrange array) 
+  // Build max heap (rearrange array) 
   for (let i = Math.floor((size / 2) - 1); i >= 0; i--) {
     heapify(procedures, auxArray, size, i);
   }
@@ -27,7 +27,6 @@ function performHeapSort(procedures, auxArray) {
     // call max heapify on the reduced heap 
     heapify(procedures, auxArray, i, 0);
   }
-
 }
 
 // To heapify a subtree rooted with node i which is 
