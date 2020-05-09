@@ -6,6 +6,7 @@ import { getQuickSortRightPivotProcedures } from '../algorithms/QuickSortRightPi
 import { getQuickSortMidPivotProcedures } from '../algorithms/QuickSortMidPivot';
 import { getBubbleSortProcedures } from '../algorithms/BubbleSort';
 import { getMergeSortProcedures } from '../algorithms/MergeSort';
+import { getHeapSortProcedures } from '../algorithms/HeapSort';
 
 import './Visualiser.css';
 import { Colors } from '../styles';
@@ -62,6 +63,12 @@ const Visualiser = () => {
     updateIsRunning(false);
   }
 
+  async function heapSort() {
+    const procedures = getHeapSortProcedures(visualArray);
+    await ProceduresReader(procedures, ANIMATION_SPEED);
+    updateIsRunning(false);
+  }
+
   return (
     <div className="visualiser-layout">
       <h1>Sorting Visualiser</h1>
@@ -76,78 +83,86 @@ const Visualiser = () => {
         ))}
       </div>
       <div className="controls-container">
-        <div className="btn'">
-          <input
-            type="range"
-            min={MIN_NUM_ARRAYS}
-            max={MAX_NUM_ARRAYS}
-            value={sliderValue}
-            onChange={(event) => {
-              updateSliderValue(event.target.value);
+        <div className="slider-group">
+          <div className="slider">
+            <input
+              type="range"
+              min={MIN_NUM_ARRAYS}
+              max={MAX_NUM_ARRAYS}
+              value={sliderValue}
+              onChange={(event) => {
+                updateSliderValue(event.target.value);
+                resetArray();
+              }}
+              disabled={isRunning}
+            />
+            <span>{sliderValue}</span>
+          </div>
+        </div>
+        <div className="button-group">
+          <button
+            className="btn"
+            onClick={() => {
+              bubbleSort();
+              updateIsRunning(true);
+            }}
+            disabled={isRunning}
+          >
+            Bubble Sort
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              mergeSort();
+              updateIsRunning(true);
+            }}
+            disabled={isRunning}
+          >
+            Merge Sort
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              quickSortWithRightPivot();
+              updateIsRunning(true);
+            }}
+            disabled={isRunning}
+          >
+            Quick Sort (Lomuto)
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              quickSortWithMidPivot();
+              updateIsRunning(true);
+            }}
+            disabled={isRunning}
+          >
+            Quick Sort (Hoare)
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              heapSort();
+              updateIsRunning(true);
+            }}
+            disabled={isRunning}
+          >
+            Heap Sort
+          </button>
+        </div>
+        <div className="reset-container">
+          <button
+            className="btn"
+            style={{ maxHeight: 20, marginTop: 5 }}
+            onClick={() => {
               resetArray();
             }}
             disabled={isRunning}
-          />
-          <span
-            style={{
-              color: 'white',
-              fontWeight: 'bold',
-              paddingLeft: 30,
-              paddingRight: 30,
-            }}
           >
-            {sliderValue}
-          </span>
+            Reset Arrays
+          </button>
         </div>
-        <button
-          className="btn"
-          onClick={() => {
-            bubbleSort();
-            updateIsRunning(true);
-          }}
-          disabled={isRunning}
-        >
-          Bubble Sort
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            mergeSort();
-            updateIsRunning(true);
-          }}
-          disabled={isRunning}
-        >
-          Merge Sort
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            quickSortWithRightPivot();
-            updateIsRunning(true);
-          }}
-          disabled={isRunning}
-        >
-          Quick Sort (Lomuto)
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            quickSortWithMidPivot();
-            updateIsRunning(true);
-          }}
-          disabled={isRunning}
-        >
-          Quick Sort (Hoare)
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            resetArray();
-          }}
-          disabled={isRunning}
-        >
-          Reset Arrays
-        </button>
       </div>
     </div>
   );
