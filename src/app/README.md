@@ -32,7 +32,7 @@ The `getBubbleSortProcedures(arr)` is called from the main app and returns a lis
 
 1. We create an auxillary array `auxArray` which is a copy of the actual array to be sorted. The `auxArray` works like a proxy of the actual array. 
 2. We pass this auxillary array to a bubble sort sorting algorithm to get the procedure of how to sort the actual array. 
-3. At each stage within the sorting process where a comparison happens or swapping happens, we push that into our `procedures` array. 
+3. At each stage within the sorting process where a comparison happens or swapping happens, we push a procedure object (with the instructions) into our `procedures` array. 
 ```
 // in BubbleSort.js 
 // within the loop, we need to compare auxArr[i] with auxArr[i+1]
@@ -44,7 +44,7 @@ if(auxArray[i] > auxArray[i+1]) {
 }
 ```
 4. Once the sorting process is complete, we would have captured all the procedures needed for the sorting process.
-5. This `procedures` array is then passed into our `VisualiserEngine` which is produces the animation.
+5. This `procedures` array is then passed into our `VisualiserEngine` which produces the animation.
 
 
 ## 3. Visualiser Engine
