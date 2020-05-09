@@ -1,7 +1,7 @@
 {
   "name": "sorting-visualiser",
   "version": "0.1.0",
-  "homepage": "http://renyitan.github.io/sorting-visualiser",
+  "homepage": "https://renyitan.github.io/sorting-visualiser",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
