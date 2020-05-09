@@ -1,4 +1,4 @@
-## Working Principles
+# Working Principles
 
 Implementing the animations was a little tricky because we can't really see the process real-time. The JS V8 engine does it realy fast. 
 
