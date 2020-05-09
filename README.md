@@ -24,4 +24,4 @@ This are a list of sorting algorithms currently being implemented:
 - Quicksort (with Hoare Partition Scheme) [O(n log n)]
 
 ### Working Principles
-To find out more about the animations implementation, click here. 
+To find out more about the animations implementation, click [here](https://github.com/renyitan/sorting_visualiser/tree/master/src/app). 
