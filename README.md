@@ -8,6 +8,7 @@ Written in Javascript on React CRA
 <br>
 To run, use the following command: 
 
+
 ```js
 npm install // get all the dependencies
 npm start
@@ -24,4 +25,4 @@ This are a list of sorting algorithms currently being implemented:
 - Quicksort (with Hoare Partition Scheme) [O(n log n)]
 
 ### Working Principles
-To find out more about the animations implementation, click [here](https://github.com/renyitan/sorting_visualiser/tree/master/src/app). 
+To find out more about the working principles of the implementation, click [here](https://github.com/renyitan/sorting_visualiser/tree/master/src/app). 
