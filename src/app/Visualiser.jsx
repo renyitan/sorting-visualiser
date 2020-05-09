@@ -7,6 +7,8 @@ import { getQuickSortMidPivotProcedures } from '../algorithms/QuickSortMidPivot'
 import { getBubbleSortProcedures } from '../algorithms/BubbleSort';
 import { getMergeSortProcedures } from '../algorithms/MergeSort';
 import { getHeapSortProcedures } from '../algorithms/HeapSort';
+import { getSelectionSortProcedures } from '../algorithms/SelectionSort';
+import { getInsertionSortProcedures } from '../algorithms/InsertionSort';
 
 import './Visualiser.css';
 import { Colors } from '../styles';
@@ -69,6 +71,17 @@ const Visualiser = () => {
     updateIsRunning(false);
   }
 
+  async function selectionSort() {
+    const procedures = getSelectionSortProcedures(visualArray);
+    await ProceduresReader(procedures, ANIMATION_SPEED);
+    updateIsRunning(false);
+  }
+  async function insertionSort() {
+    const procedures = getInsertionSortProcedures(visualArray);
+    await ProceduresReader(procedures, ANIMATION_SPEED);
+    updateIsRunning(false);
+  }
+
   return (
     <div className="visualiser-layout">
       <h1>Sorting Visualiser</h1>
@@ -113,12 +126,42 @@ const Visualiser = () => {
           <button
             className="btn"
             onClick={() => {
+              selectionSort();
+              updateIsRunning(true);
+            }}
+            disabled={isRunning}
+          >
+            Selection Sort
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              insertionSort();
+              updateIsRunning(true);
+            }}
+            disabled={isRunning}
+          >
+            Insertion Sort
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
               mergeSort();
               updateIsRunning(true);
             }}
             disabled={isRunning}
           >
             Merge Sort
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              heapSort();
+              updateIsRunning(true);
+            }}
+            disabled={isRunning}
+          >
+            Heap Sort
           </button>
           <button
             className="btn"
@@ -139,16 +182,6 @@ const Visualiser = () => {
             disabled={isRunning}
           >
             Quick Sort (Hoare)
-          </button>
-          <button
-            className="btn"
-            onClick={() => {
-              heapSort();
-              updateIsRunning(true);
-            }}
-            disabled={isRunning}
-          >
-            Heap Sort
           </button>
         </div>
         <div className="reset-container">

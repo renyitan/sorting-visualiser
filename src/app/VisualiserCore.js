@@ -4,7 +4,7 @@
 import { Colors } from '../styles';
 import { PROCEDURE_TYPE } from '../utils/procedureTypes';
 
-export function swapBars(a, b) {
+function swapBars(a, b) {
   const arrayBars = document.getElementsByClassName('array-bar');
   // visual
   const temp = arrayBars[a].style.height;
@@ -12,7 +12,7 @@ export function swapBars(a, b) {
   arrayBars[b].style.height = temp;
 }
 
-export function markComplete() {
+function markComplete() {
   const arrayBars = document.getElementsByClassName('array-bar');
   for (let i = 0; i < arrayBars.length; i++) {
     arrayBars[i].style.backgroundColor = Colors.BAR_COMPLETED;
